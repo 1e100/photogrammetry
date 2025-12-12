@@ -37,6 +37,7 @@ RUN set -eux && \
         libgoogle-glog-dev \
         libgtest-dev \
         libjpeg-dev \
+        liblz4-dev \
         libmetis-dev \
         libmkl-full-dev \
         libopenimageio-dev \
@@ -104,14 +105,16 @@ ENV CC=/usr/bin/gcc-11 \
     CMAKE_CUDA_ARCHITECTURES=86
 
 # --------------------------------------------------------------------------- #
-# Install latest CMake (4.2.0 as of now) from Kitware binaries
+# First install older CMake to build and install flann.
+# Then install the latest (4.2.0) to build everything else.
 # --------------------------------------------------------------------------- #
 RUN test -f /usr/share/doc/kitware-archive-keyring/copyright || \
     wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | \
     gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null && \
     echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ noble main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null && \
     apt update && \
-    apt install -y cmake
+    apt install -y cmake=4.2.1-0kitware1ubuntu24.04.1 \
+      cmake-data=4.2.1-0kitware1ubuntu24.04.1
     
 # --------------------------------------------------------------------------- #
 # Build & install SuiteSparse from source (latest tag), CUDA + MKL, Ninja
@@ -151,6 +154,7 @@ RUN set -eux && \
         -DCMAKE_CUDA_ARCHITECTURES=86 && \
     ninja && \
     ninja install
+
 
 # --------------------------------------------------------------------------- #
 # Build & install COLMAP from source (latest release tag), CUDA 8.6, Ninja
