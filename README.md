@@ -20,7 +20,7 @@ so:
 
 ```bash
 mkdir -p ~/.config/distrobox
-echo "container_manager='docker'" > ~/.config/distrobox
+echo "container_manager='docker'" > ~/.config/distrobox/distrobox.conf
 ```
 
 By default it uses Podman, which does not have some of the docker build
