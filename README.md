@@ -2,7 +2,7 @@
 
 ## Rationale
 
-Ubuntu ships with outdated, CPU-only Colmap which is also extremely slow for
+Ubuntu ships with outdated Colmap which is also extremely slow for
 large image collections. This Distrobox container packages recent builds of
 Colmap and Glomap, built for CUDA 12.9.1 (so your host should have at least
 12.9.1 for this to work).
