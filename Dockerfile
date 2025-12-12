@@ -11,12 +11,12 @@ SHELL ["/bin/bash", "-lc"]
 # --------------------------------------------------------------------------- #
 RUN set -eux && \
     apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y \
         software-properties-common \
         ca-certificates && \
     add-apt-repository -y multiverse && \
     apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y \
         build-essential \
         cudss \
         curl \
@@ -150,6 +150,7 @@ RUN set -eux && \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
         -DCERES_THREADING_MODEL=OPENMP \
+        -DUSE_CUDA=ON \
         -DSUITESPARSE=ON \
         -DCMAKE_CUDA_ARCHITECTURES=86 && \
     ninja && \
